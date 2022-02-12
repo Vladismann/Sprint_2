@@ -5,9 +5,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
-
 import java.util.List;
-
 import static org.junit.Assert.*;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -39,12 +37,16 @@ public class LionTest {
         boolean actual = lion.doesHaveMane();
         assertTrue(actual);
     }
-    //Проверяем, что конструкто содержит исключение, если пол неопределен
+    //Проверяем, что конструктор выбрасывает исключение, если пол неопределен и его текст корректен
     @Test
     public void checkIfLionAsexualThrowsException() {
+        Exception exception = null;
         String expected = "Используйте допустимые значения пола животного - самец или самка";
         try { new Lion("Бесполый", feline); }
-        catch (Exception ex) { assertEquals(ex.getMessage(), expected);}
+        catch (Exception ex) { exception = ex; }
+
+        assertNotNull(exception);
+        assertEquals(exception.getMessage(), expected);
     }
     //Проверяем, что лев дергает метод семейства кошачьих/хищников при работе метода getFood
     @Test

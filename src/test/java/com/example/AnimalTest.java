@@ -3,6 +3,7 @@ package com.example;
 import org.junit.Test;
 import java.util.List;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 public class AnimalTest {
 
@@ -22,13 +23,17 @@ public class AnimalTest {
         List<String> expected = List.of("Трава", "Различные растения");
         assertEquals(expected, actual);
     }
-    //Проверяем, что метод getFood обрабатывает исключения и выводит заложенное в него сообщение
+    //Проверяем, что метод getFood выбрасывает исключение, если вид неопределен и его текст корректен
     @Test
     public void checkIsUnknownSpecies() {
         Animal animal = new Animal();
+        Exception exception = null;
         String expected = "Неизвестный вид животного, используйте значение Травоядное или Хищник";
         try { animal.getFood("Неизвестный вид"); }
-        catch (Exception ex) { assertEquals(ex.getMessage(), expected);}
+        catch (Exception ex) { exception = ex; }
+
+        assertNotNull(exception);
+        assertEquals(exception.getMessage(), expected);
     }
     //Проверяем сообщение семействах животных
     @Test
